@@ -25,6 +25,7 @@ class LogTimeModel: ViewModel() {
         }
     }
 
+
     sealed class LogTime{
         object Empty: LogTime()
         data class Error(val message: String): LogTime()
