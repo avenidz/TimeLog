@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="log_color_100">#c2028f</color>
+    <color name="log_color_200">#6c0350</color>
+    <color name="log_color_500">#4c0238</color>
+    <color name="log_color_50">#dec0d6</color>
+    <color name="log_color_gray">#85707f</color>
+
+    <color name="sign_color_100">#807c7f</color>
+
+    <color name="purple_200">#FF6200EE</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

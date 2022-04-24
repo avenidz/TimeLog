@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/bottomLogin">
+    <fragment
+        android:id="@+id/bottomLogin"
+        android:name="com.example.timelog.fragment.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/bottomSignup"
+        android:name="com.example.timelog.fragment.SignupFragment"
+        android:label="Sign-up"
+        tools:layout="@layout/fragment_signup" />
+</navigation>
