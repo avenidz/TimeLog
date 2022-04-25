@@ -21,4 +21,14 @@ interface LogDataDao {
 
     @Update
     fun updateUser(LogDataUser: LogDataUser)
+
+
+
+
+    @Query("SELECT * FROM userTimeLog WHERE logId=:loggedId ORDER BY timeId ASC")
+    fun getUserTimeLog(loggedId: Int): List<UserTimeLog>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun saveTimeLog(userTimeLog: UserTimeLog)
+
 }

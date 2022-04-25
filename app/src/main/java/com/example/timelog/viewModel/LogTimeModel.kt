@@ -21,6 +21,7 @@ class LogTimeModel: ViewModel() {
         }else if(logDescription == ""){
             logTime.value = LogTime.Error("Add Description.")
         }else{
+            addNewTimeLog()
             logTime.value = LogTime.Success
         }
     }
@@ -31,5 +32,9 @@ class LogTimeModel: ViewModel() {
         data class Error(val message: String): LogTime()
         object Loading: LogTime()
         object Success: LogTime()
+    }
+
+    private fun addNewTimeLog(){
+
     }
 }
