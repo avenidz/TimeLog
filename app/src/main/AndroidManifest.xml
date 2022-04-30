@@ -24,6 +24,11 @@
             android:label="Login/Signup">
 
         </activity>
+        <activity android:name=".activity.CalendarLogView"
+            android:exported="true"
+            android:label="Calendar">
+
+        </activity>
     </application>
 
 </manifest>

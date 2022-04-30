@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextClock
+            android:id="@+id/textClock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:format12Hour="hh:mm:ss"
@@ -37,7 +38,7 @@
                 />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_recycleview"
+            android:id="@+id/mainRecycleView"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/log_list"
             android:layout_width="match_parent"

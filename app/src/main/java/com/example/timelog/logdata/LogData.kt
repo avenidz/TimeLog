@@ -2,7 +2,6 @@ package com.example.timelog.logdata
 
 import android.content.Context
 import androidx.room.*
-import java.util.*
 
 @Entity(tableName = "logDataUser")
 data class LogDataUser(

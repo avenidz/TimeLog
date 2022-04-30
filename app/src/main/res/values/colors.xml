@@ -5,6 +5,7 @@
     <color name="log_color_500">#4c0238</color>
     <color name="log_color_50">#dec0d6</color>
     <color name="log_color_gray">#85707f</color>
+    <color name="log_color_gray1">#FFE8E8E8</color>
 
     <color name="sign_color_100">#807c7f</color>
 

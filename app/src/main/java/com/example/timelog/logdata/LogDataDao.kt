@@ -28,6 +28,9 @@ interface LogDataDao {
     @Query("SELECT * FROM userTimeLog WHERE logId=:loggedId ORDER BY timeId ASC")
     fun getUserTimeLog(loggedId: Int): List<UserTimeLog>
 
+    @Query("SELECT * FROM userTimeLog WHERE logId=:loggedId AND logTimeDate=:loggedDate ORDER BY timeId ASC")
+    fun getUserTimeLogByDate(loggedId: Int, loggedDate: String): List<UserTimeLog>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun saveTimeLog(userTimeLog: UserTimeLog)
 

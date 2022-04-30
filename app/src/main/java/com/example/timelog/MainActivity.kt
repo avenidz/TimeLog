@@ -2,6 +2,8 @@ package com.example.timelog
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -14,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.timelog.activity.ActivityLoginSignup
+import com.example.timelog.activity.CalendarLogView
 import com.example.timelog.databinding.ActivityMainBinding
 import com.example.timelog.logdata.LogDataUser
 import com.example.timelog.logdata.LogDataUserDatabase
@@ -24,6 +27,8 @@ class MainActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     var backPressed: Boolean = false
+    lateinit var itLogUserData: List<LogDataUser>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -48,12 +53,37 @@ class MainActivity: AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(backPressed){
-            finishAffinity()
-        }else{
-            Toast.makeText(this, "Tap again to exit!", Toast.LENGTH_SHORT).show()
-            backPressed = true
+
+                    if(backPressed){
+                        finishAffinity()
+                    }else{
+                        Toast.makeText(this, "Tap again to exit!", Toast.LENGTH_SHORT).show()
+                        backPressed = true
+                    }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflateMenu = menuInflater
+        inflateMenu.inflate(R.menu.menu_calendar_view, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_calendar -> {
+                startActivity(
+                    Intent(
+                        this, CalendarLogView::class.java
+                    ).putExtra("UserId",itLogUserData[0].logId.toString())
+                )
+            }
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
         }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun showFragment(){
@@ -73,7 +103,6 @@ class MainActivity: AppCompatActivity() {
 
 
     lateinit var viewModel:LogUserModel
-    lateinit var itLogUserData: List<LogDataUser>
 
     private fun showLogUserInfo(checkUserLog: List<LogDataUser>) {
         viewModel = ViewModelProvider(this).get(LogUserModel::class.java)
