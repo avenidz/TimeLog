@@ -75,7 +75,6 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
                 buttonAddLog.context,
                 textTitle?.text.toString(),
                 textDescription?.text.toString(),
-                binding.textClock.text as String
             )
         }
         lifecycleScope.launchWhenStarted {
@@ -99,9 +98,12 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
 
     private  fun loadLogList(){
         val getUserData = logDatabase.logUserDao().checkLoggedUser()
-        val userId = getUserData[0].logId
-        val logList = logDatabase.logUserDao().getUserTimeLog(userId)
-        adapter.showUserLogList(logList)
+        if(getUserData.isNotEmpty()){
+            val userId = getUserData[0].logId
+            val logList = logDatabase.logUserDao().getUserTimeLog(userId)
+            adapter.showUserLogList(logList)
+        }
+
     }
 
 }

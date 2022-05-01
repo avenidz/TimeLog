@@ -29,6 +29,11 @@
             android:label="Calendar">
 
         </activity>
+        <activity android:name=".activity.ViewLogDetails"
+            android:exported="true"
+            android:label="Details">
+
+        </activity>
     </application>
 
 </manifest>

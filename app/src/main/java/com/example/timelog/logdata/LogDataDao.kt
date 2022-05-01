@@ -20,7 +20,7 @@ interface LogDataDao {
     fun saveUser(logDataUser: LogDataUser)
 
     @Update
-    fun updateUser(LogDataUser: LogDataUser)
+    fun updateUser(logDataUser: LogDataUser)
 
 
 
@@ -31,7 +31,13 @@ interface LogDataDao {
     @Query("SELECT * FROM userTimeLog WHERE logId=:loggedId AND logTimeDate=:loggedDate ORDER BY timeId ASC")
     fun getUserTimeLogByDate(loggedId: Int, loggedDate: String): List<UserTimeLog>
 
+    @Query("SELECT * FROM userTimeLog WHERE timeId=:logDetails")
+    fun getLogDetailsById(logDetails: Int): List<UserTimeLog>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun saveTimeLog(userTimeLog: UserTimeLog)
+
+    @Update
+    fun updateLogPending(userTimeLog: UserTimeLog)
 
 }

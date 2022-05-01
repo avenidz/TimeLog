@@ -42,7 +42,8 @@ class CalendarLogView: AppCompatActivity(){
 
         binding.calendarView.setOnDateChangeListener { view: CalendarView, year: Int, month: Int, dayOfMonth: Int ->
             val modifiedMonth = String.format("%02d", month+1)
-            val selectedDate = "$year-${modifiedMonth}-$dayOfMonth"
+            val modifiedDay = String.format("%02d", dayOfMonth)
+            val selectedDate = "$year-${modifiedMonth}-$modifiedDay"
             callModel(selectedDate)
         }
         lifecycleScope.launchWhenStarted {

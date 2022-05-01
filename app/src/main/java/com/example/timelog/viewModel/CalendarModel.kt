@@ -21,6 +21,7 @@ class CalendarModel: ViewModel() {
         delay(200)
 
         userLogData = viewUserLog(context, userId, selectedDate)
+
         if(userLogData.isEmpty()){
             calendar.value = CalendarView.Error(userLogData)
         }else{

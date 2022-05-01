@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.timelog.R
+import com.example.timelog.callback.FragmentHomeCallback
 import com.example.timelog.logdata.UserTimeLog
 
-class FragmentHomeAdapter: RecyclerView.Adapter<FragmentHomeAdapter.LogAdapter>(){
+class FragmentHomeAdapter: RecyclerView.Adapter<FragmentHomeAdapter.LogAdapter>(), FragmentHomeCallback{
 
     val logList : MutableList<UserTimeLog> = mutableListOf()
 
@@ -26,6 +27,11 @@ class FragmentHomeAdapter: RecyclerView.Adapter<FragmentHomeAdapter.LogAdapter>(
             val userLogTime = timeLog.timeLogIn
             val dateAndTime = "$userLogDate / $userLogTime"
             logTime.text = dateAndTime
+
+            view.setOnClickListener{
+                //showing details
+                onItemSelected(view, timeLog)
+            }
 
         }
 

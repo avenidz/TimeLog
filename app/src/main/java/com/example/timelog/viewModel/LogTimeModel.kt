@@ -11,6 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
 
@@ -20,7 +21,7 @@ class LogTimeModel: ViewModel() {
     val logTimeState: StateFlow<LogTime> = logTime
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun logMyTime(context: Context, logTitle: String, logDescription: String, textClock: String) = viewModelScope.launch {
+    fun logMyTime(context: Context, logTitle: String, logDescription: String) = viewModelScope.launch {
         logTime.value = LogTime.Loading
         delay(300)
 
@@ -29,7 +30,7 @@ class LogTimeModel: ViewModel() {
         }else if(logDescription == ""){
             logTime.value = LogTime.Error("Add Description.")
         }else{
-            addNewTimeLog(context,logTitle,logDescription,textClock)
+            addNewTimeLog(context,logTitle,logDescription)
             logTime.value = LogTime.Success
         }
     }
@@ -43,14 +44,21 @@ class LogTimeModel: ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun addNewTimeLog(context: Context, logTitle: String, logDescription: String, textClock: String){
+    private fun addNewTimeLog(context: Context, logTitle: String, logDescription: String){
         //check id of login user
         val extractLogUserId = returnLogId(context)
 
         //save new log
-        val calendar = Calendar.getInstance()
-        val setDate = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH))
-        val newLog = UserTimeLog(0, extractLogUserId, logTitle, logDescription, textClock,"", setDate.toString())
+
+        val currentDateAndTime = Date()
+        val currentTime = currentDateAndTime.time
+        val formatTo24 = SimpleDateFormat("HH:mm")
+        val saveCurrentTime = formatTo24.format(currentTime)
+
+        val formatDate = SimpleDateFormat("yyyy-MM-dd")
+        val saveCurrentDate = formatDate.format(currentDateAndTime)
+
+        val newLog = UserTimeLog(0, extractLogUserId, logTitle, logDescription, saveCurrentTime.toString(),"", saveCurrentDate.toString())
         LogDataUserDatabase.getDatabaseInstance(context).logUserDao().saveTimeLog(newLog)
     }
     private fun returnLogId(context: Context):Int{
