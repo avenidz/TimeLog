@@ -17,8 +17,6 @@ interface ViewLogDetailsCallback {
     fun pendingLogUpdate(thisContext: Context, logId: Int){
 
         val logDetails = returnedData(thisContext, logId)
-        val c = Calendar.getInstance()
-
 
         val current = Date()
         val currentTime = current.time

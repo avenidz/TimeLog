@@ -58,6 +58,10 @@ class LogTimeModel: ViewModel() {
         val formatDate = SimpleDateFormat("yyyy-MM-dd")
         val saveCurrentDate = formatDate.format(currentDateAndTime)
 
+        //by saving new log
+        //time must be save as with the date
+        //ex. 1993-02-20 20:09
+
         val newLog = UserTimeLog(0, extractLogUserId, logTitle, logDescription, saveCurrentTime.toString(),"", saveCurrentDate.toString())
         LogDataUserDatabase.getDatabaseInstance(context).logUserDao().saveTimeLog(newLog)
     }

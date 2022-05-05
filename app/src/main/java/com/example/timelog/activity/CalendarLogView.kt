@@ -14,6 +14,7 @@ import com.example.timelog.databinding.ActivityCalendarViewBinding
 import com.example.timelog.logadapter.CalendarViewAdapter
 import com.example.timelog.viewModel.CalendarModel
 import kotlinx.coroutines.flow.collect
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
 
@@ -41,10 +42,17 @@ class CalendarLogView: AppCompatActivity(){
         initialDate()
 
         binding.calendarView.setOnDateChangeListener { view: CalendarView, year: Int, month: Int, dayOfMonth: Int ->
-            val modifiedMonth = String.format("%02d", month+1)
-            val modifiedDay = String.format("%02d", dayOfMonth)
-            val selectedDate = "$year-${modifiedMonth}-$modifiedDay"
-            callModel(selectedDate)
+            val calendar = Calendar.getInstance()
+
+            calendar.set(Calendar.YEAR,year)
+            calendar.set(Calendar.MONTH,month)
+            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth)
+
+            val date = calendar.time
+
+            val formatDate = SimpleDateFormat("yyyy-MM-dd").format(date)
+
+            callModel(formatDate.toString())
         }
         lifecycleScope.launchWhenStarted {
             calendarModel.calendarState.collect{
