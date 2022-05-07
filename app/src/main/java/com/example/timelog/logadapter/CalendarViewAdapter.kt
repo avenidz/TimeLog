@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.timelog.R
 import com.example.timelog.logdata.UserTimeLog
+import java.text.SimpleDateFormat
 
 class CalendarViewAdapter: RecyclerView.Adapter<CalendarViewAdapter.CalendarAdapter>() {
 
@@ -23,8 +24,13 @@ class CalendarViewAdapter: RecyclerView.Adapter<CalendarViewAdapter.CalendarAdap
 
             val userLogDate = loglistSelected.timeLogDate
             val userLogTime = loglistSelected.timeLogIn
-            val dateAndTime = "$userLogDate / $userLogTime"
-            logTime.text = dateAndTime
+
+            val convertToLong = userLogTime.toLong()
+            val convertToTime = SimpleDateFormat("HH:mm").format(convertToLong)
+
+            val showDateTime = "Date: $userLogDate || Time-in: $convertToTime"
+
+            logTime.text = showDateTime
         }
     }
 

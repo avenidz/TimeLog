@@ -11,6 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
@@ -50,19 +51,17 @@ class LogTimeModel: ViewModel() {
 
         //save new log
 
+        var currentTimeStamp: Long = 0
+
         val currentDateAndTime = Date()
-        val currentTime = currentDateAndTime.time
-        val formatTo24 = SimpleDateFormat("HH:mm")
-        val saveCurrentTime = formatTo24.format(currentTime)
+        currentTimeStamp = currentDateAndTime.time
+
+
 
         val formatDate = SimpleDateFormat("yyyy-MM-dd")
         val saveCurrentDate = formatDate.format(currentDateAndTime)
 
-        //by saving new log
-        //time must be save as with the date
-        //ex. 1993-02-20 20:09
-
-        val newLog = UserTimeLog(0, extractLogUserId, logTitle, logDescription, saveCurrentTime.toString(),"", saveCurrentDate.toString())
+        val newLog = UserTimeLog(0, extractLogUserId, logTitle, logDescription, currentTimeStamp.toString(),"", saveCurrentDate.toString())
         LogDataUserDatabase.getDatabaseInstance(context).logUserDao().saveTimeLog(newLog)
     }
     private fun returnLogId(context: Context):Int{

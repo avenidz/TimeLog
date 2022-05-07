@@ -13,6 +13,9 @@ import com.example.timelog.callback.ViewLogDetailsCallback
 import com.example.timelog.databinding.LayoutViewlogdetailsBinding
 import com.example.timelog.viewModel.ViewDetailsModel
 import kotlinx.coroutines.flow.collect
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ViewLogDetails : AppCompatActivity(),ViewLogDetailsCallback {
 
@@ -57,7 +60,13 @@ class ViewLogDetails : AppCompatActivity(),ViewLogDetailsCallback {
                         binding.detailTitle.text = getData[0].timeLogTitle
                         binding.detailDescription.text = getData[0].timeLogDescription
                         binding.detailDate.text = getData[0].timeLogDate
-                        binding.detailIn.text = getData[0].timeLogIn
+
+                        val timeLogin = getData[0].timeLogIn
+                        val timeToLongIn = timeLogin.toLong()
+                        val convertToTimeIn = SimpleDateFormat("HH:mm").format(timeToLongIn)
+                        binding.detailIn.text = convertToTimeIn
+
+
 
                         val checkOutIfNot = getData[0].timeLogOut
 
@@ -65,7 +74,10 @@ class ViewLogDetails : AppCompatActivity(),ViewLogDetailsCallback {
                             binding.detailOut.text = "Pending log"
                             binding.detailButtonLogEnd.isVisible = true
                         }else{
-                            binding.detailOut.text = checkOutIfNot
+                            val timeToLong = checkOutIfNot.toLong()
+                            val convertToTimeOut = SimpleDateFormat("HH:mm").format(timeToLong)
+
+                            binding.detailOut.text = convertToTimeOut
                             binding.detailButtonLogEnd.isVisible = false
                         }
                     }

@@ -17,12 +17,12 @@ interface ViewLogDetailsCallback {
     fun pendingLogUpdate(thisContext: Context, logId: Int){
 
         val logDetails = returnedData(thisContext, logId)
+        var currentTime : Long = 0
 
         val current = Date()
-        val currentTime = current.time
+        currentTime = current.time
 
-        val _convertTo24Format = SimpleDateFormat("HH:mm")
-        val updateTime = _convertTo24Format.format(currentTime)
+
 
         val updateData = UserTimeLog(
             logId,
@@ -30,7 +30,7 @@ interface ViewLogDetailsCallback {
             logDetails[0].timeLogTitle,
             logDetails[0].timeLogDescription,
             logDetails[0].timeLogIn,
-            updateTime.toString(),
+            currentTime.toString(),
             logDetails[0].timeLogDate
         )
         LogDataUserDatabase.getDatabaseInstance(thisContext).logUserDao().updateLogPending(updateData)
