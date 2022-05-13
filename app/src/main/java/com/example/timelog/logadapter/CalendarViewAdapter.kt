@@ -24,11 +24,26 @@ class CalendarViewAdapter: RecyclerView.Adapter<CalendarViewAdapter.CalendarAdap
 
             val userLogDate = loglistSelected.timeLogDate
             val userLogTime = loglistSelected.timeLogIn
+            val userLogOut = loglistSelected.timeLogOut
 
             val convertToLong = userLogTime.toLong()
-            val convertToTime = SimpleDateFormat("HH:mm").format(convertToLong)
 
-            val showDateTime = "Date: $userLogDate || Time-in: $convertToTime"
+            val convertToLongOut:Long = if(userLogOut == ""){
+                0
+            }else{
+                userLogOut.toLong()
+            }
+
+            val convertToTime = SimpleDateFormat("HH:mm").format(convertToLong)
+            val convertToTimeOut = SimpleDateFormat("HH:mm").format(convertToLongOut)
+
+            val showDateTime = "Date: $userLogDate || Time-in: $convertToTime || Time-out: ${
+                if(userLogOut == ""){
+                    "Pending"
+                }else{
+                    convertToTimeOut
+                }
+            }"
 
             logTime.text = showDateTime
         }

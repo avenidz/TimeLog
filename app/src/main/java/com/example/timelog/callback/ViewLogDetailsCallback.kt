@@ -5,11 +5,11 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.timelog.logdata.LogDataUserDatabase
 import com.example.timelog.logdata.UserTimeLog
-import java.sql.Timestamp
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.LocalTime
+import java.time.Duration
 import java.util.*
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.nanoseconds
 
 interface ViewLogDetailsCallback {
 
@@ -38,6 +38,30 @@ interface ViewLogDetailsCallback {
 
     private fun returnedData(thisContext: Context, logId: Int): List<UserTimeLog>{
         return LogDataUserDatabase.getDatabaseInstance(thisContext).logUserDao().getLogDetailsById(logId)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun countTime(countTime: List<String>): String {
+        val timeIn = countTime[0].toLong()
+        val timeOut = countTime[1].toLong()
+
+
+        val timeDiff = timeOut - timeIn
+
+        val seconds = timeDiff / 1000
+        val minutes = seconds / 60
+        val hours = minutes / 60
+
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hours.toInt())
+        calendar.set(Calendar.MINUTE, minutes.toInt())
+        calendar.set(Calendar.SECOND, seconds.toInt())
+
+        val date = calendar.time
+        val formatDateTime = SimpleDateFormat("HH:mm:ss").format(date)
+
+
+        return "$formatDateTime"
     }
 
 }

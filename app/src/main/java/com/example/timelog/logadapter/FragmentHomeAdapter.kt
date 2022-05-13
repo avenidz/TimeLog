@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.timelog.R
 import com.example.timelog.callback.FragmentHomeCallback
 import com.example.timelog.logdata.UserTimeLog
-import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 
 class FragmentHomeAdapter: RecyclerView.Adapter<FragmentHomeAdapter.LogAdapter>(), FragmentHomeCallback{
 
@@ -28,11 +26,25 @@ class FragmentHomeAdapter: RecyclerView.Adapter<FragmentHomeAdapter.LogAdapter>(
 
             val userLogDate = timeLog.timeLogDate
             val userLogTime = timeLog.timeLogIn
+            val userLogTimeOut = timeLog.timeLogOut
 
             val longTimeStamp = userLogTime.toLong()
-            val formatTime = SimpleDateFormat("HH:mm").format(longTimeStamp)
+            val longTimeStampOut: Long = if(userLogTimeOut == "") {
+                0
+            }else{
+                userLogTimeOut.toLong()
+            }
 
-            val showValue = "Date: $userLogDate || Time: $formatTime"
+            val formatTime = SimpleDateFormat("HH:mm").format(longTimeStamp)
+            val formatTimeOut = SimpleDateFormat("HH:mm").format(longTimeStampOut)
+
+            val showValue = "Date: $userLogDate || Time: $formatTime - ${
+                if(userLogTimeOut == ""){
+                    "Pending"
+                }else{
+                    formatTimeOut
+                }
+            }"
             logTime.text = showValue
 
             view.setOnClickListener{

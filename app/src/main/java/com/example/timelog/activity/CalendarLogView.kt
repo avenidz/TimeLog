@@ -3,7 +3,6 @@ package com.example.timelog.activity
 import android.os.Build
 import android.os.Bundle
 import android.widget.CalendarView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.timelog.databinding.ActivityCalendarViewBinding
 import com.example.timelog.logadapter.CalendarViewAdapter
+import com.example.timelog.logdata.UserTimeLog
 import com.example.timelog.viewModel.CalendarModel
 import kotlinx.coroutines.flow.collect
 import java.text.SimpleDateFormat
@@ -58,14 +58,17 @@ class CalendarLogView: AppCompatActivity(){
             calendarModel.calendarState.collect{
                 when(it){
                     is CalendarModel.CalendarView.Error ->{
+
                         adapter.showSelectedLogList(it.logListAsSelected)
-                        binding.calendarRecyclerView.isVisible = false
-                        binding.recyclerIsEmpty.isVisible = true
+                        showHideError()
+
                     }
                     is CalendarModel.CalendarView.Success ->{
-                        binding.calendarRecyclerView.isVisible = true
-                        binding.recyclerIsEmpty.isVisible = false
+
+                        showHideSuccess()
                         adapter.showSelectedLogList(it.logListAsSelected)
+                        sumOfTime(it.logListAsSelected)
+
                     }
                     else -> Unit
                 }
@@ -73,6 +76,17 @@ class CalendarLogView: AppCompatActivity(){
         }
 
     }
+    private fun showHideSuccess(){
+        binding.calendarRecyclerView.isVisible = true
+        binding.recyclerIsEmpty.isVisible = false
+        binding.textEarnedTime.isVisible = true
+    }
+    private fun showHideError(){
+        binding.calendarRecyclerView.isVisible = false
+        binding.recyclerIsEmpty.isVisible = true
+        binding.textEarnedTime.isVisible = false
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initialDate(){
         val c = Calendar.getInstance()
@@ -85,5 +99,43 @@ class CalendarLogView: AppCompatActivity(){
             userId.toInt(),
             selectedDate
         )
+    }
+    private fun sumOfTime(timeList: List<UserTimeLog>){ //sum of time with the given selected date or initial
+        var previous: Long = 0
+
+        for(i in timeList){
+            val login = i.timeLogIn
+
+            var logout: String = if(i.timeLogIn == ""){
+                ""
+            }else{
+                i.timeLogOut
+            }
+
+            if(logout == ""){
+                previous = previous
+            }else{
+                var difference = logout.toLong() - login.toLong()
+                previous += difference
+            }
+
+
+        }
+
+        val seconds = previous / 1000
+        val minutes = seconds / 60
+        val hours = minutes / 60
+
+        val calendar = Calendar.getInstance()
+
+        calendar.set(Calendar.HOUR_OF_DAY, hours.toInt())
+        calendar.set(Calendar.MINUTE, minutes.toInt())
+        calendar.set(Calendar.SECOND, seconds.toInt())
+
+        val date = calendar.time
+
+        val timeFormat: String = SimpleDateFormat("HH:mm:ss").format(date)
+        binding.textEarnedTime.text = "Earned Time: $timeFormat"
+
     }
 }

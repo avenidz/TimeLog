@@ -19,6 +19,15 @@
         android:text="No records found!"
         android:textColor="@color/log_color_500"
         />
+    <TextView
+        android:id="@+id/textEarnedTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Earned time"
+        android:textAlignment="center"
+        android:padding="10dp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

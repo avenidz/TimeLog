@@ -13,9 +13,7 @@ import com.example.timelog.callback.ViewLogDetailsCallback
 import com.example.timelog.databinding.LayoutViewlogdetailsBinding
 import com.example.timelog.viewModel.ViewDetailsModel
 import kotlinx.coroutines.flow.collect
-import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.util.*
 
 class ViewLogDetails : AppCompatActivity(),ViewLogDetailsCallback {
 
@@ -47,6 +45,7 @@ class ViewLogDetails : AppCompatActivity(),ViewLogDetailsCallback {
 
     private val detailModel: ViewDetailsModel by viewModels()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showingDetails(detailId: Int){
         detailModel.detailModelData(this, detailId)
         lifecycleScope.launchWhenStarted {
@@ -79,6 +78,11 @@ class ViewLogDetails : AppCompatActivity(),ViewLogDetailsCallback {
 
                             binding.detailOut.text = convertToTimeOut
                             binding.detailButtonLogEnd.isVisible = false
+
+                            var listOfTime = listOf(getData[0].timeLogIn, getData[0].timeLogOut)
+                            var sumOfTime = countTime(listOfTime)
+                            binding.logCount.isVisible = true
+                            binding.logCount.text = "Total time: $sumOfTime"
                         }
                     }
                     else -> Unit
